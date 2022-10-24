@@ -1,4 +1,4 @@
-import { RefObject, useEffect, useState } from 'react';
+import { RefObject, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Twirl as Hamburger } from 'hamburger-react';
@@ -6,6 +6,8 @@ import clsx from 'clsx';
 
 import Container from '@/components/UI/Container';
 import logo from '@/assets/images/logo.png';
+import useWindowSize from '@/hooks/useWindowSize'
+import useWindowScroll from '@/hooks/useWindowScroll'
 
 type HeaderParams = {
   sections: {
@@ -16,25 +18,17 @@ type HeaderParams = {
 
 const Header = ({ sections }: HeaderParams) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [windowScroll, setWindowScroll] = useState(0);
-  useEffect(() => {
-    const handleScroll = () => {
-      setWindowScroll(window.scrollY);
-    };
+  const windowSize = useWindowSize()
+  const windowScroll = useWindowScroll()
 
-    handleScroll();
-
-    window.addEventListener('scroll', handleScroll);
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, []);
+  const isSmallScreen = windowSize.width !== undefined ? windowSize.width < 768 : false
+  const hasScrolled = windowScroll !== undefined ? windowScroll > 0 : false
 
   return (
     <header
       className={clsx(
         'py-4 z-1 text-white md:fixed top-0 right-0 left-0 transition-colors duration-500 ease-out',
-        windowScroll > 0 && 'bg-custom-gray'
+        hasScrolled && 'bg-custom-gray'
       )}
     >
       <Container>
@@ -69,7 +63,7 @@ const Header = ({ sections }: HeaderParams) => {
                     onClick={() => {
                       setIsMenuOpen(false);
                       window.scrollTo({
-                        top: ref.current?.offsetTop ?? 0,
+                        top: isSmallScreen ? ref.current?.offsetTop ?? 0 : ((ref.current?.offsetTop !== undefined) ? ref.current?.offsetTop - 80 : 0),
                         behavior: 'smooth',
                       });
                     }}
