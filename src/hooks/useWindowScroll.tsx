@@ -1,6 +1,6 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect } from 'react';
 
-type Scroll = number | undefined
+type Scroll = number | undefined;
 
 const useWindowScroll = () => {
   const [windowScroll, setWindowScroll] = useState<Scroll>(undefined);
@@ -17,6 +17,6 @@ const useWindowScroll = () => {
   }, []);
 
   return windowScroll;
-}
+};
 
 export default useWindowScroll;

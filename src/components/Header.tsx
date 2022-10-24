@@ -6,8 +6,8 @@ import clsx from 'clsx';
 
 import Container from '@/components/UI/Container';
 import logo from '@/assets/images/logo.png';
-import useWindowSize from '@/hooks/useWindowSize'
-import useWindowScroll from '@/hooks/useWindowScroll'
+import useWindowSize from '@/hooks/useWindowSize';
+import useWindowScroll from '@/hooks/useWindowScroll';
 
 type HeaderParams = {
   sections: {
@@ -18,11 +18,12 @@ type HeaderParams = {
 
 const Header = ({ sections }: HeaderParams) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const windowSize = useWindowSize()
-  const windowScroll = useWindowScroll()
+  const windowSize = useWindowSize();
+  const windowScroll = useWindowScroll();
 
-  const isSmallScreen = windowSize.width !== undefined ? windowSize.width < 768 : false
-  const hasScrolled = windowScroll !== undefined ? windowScroll > 0 : false
+  const isSmallScreen =
+    windowSize.width !== undefined ? windowSize.width < 768 : false;
+  const hasScrolled = windowScroll !== undefined ? windowScroll > 0 : false;
 
   return (
     <header
@@ -62,8 +63,15 @@ const Header = ({ sections }: HeaderParams) => {
                     className='p-3 hover:text-custom-cyan'
                     onClick={() => {
                       setIsMenuOpen(false);
+
+                      const scrollToHeight = (() => {
+                        if (ref.current?.offsetTop == undefined) return 0;
+                        if (ref.current?.offsetTop - 80 < 0) return 0;
+                        return ref.current?.offsetTop - 80;
+                      })();
+
                       window.scrollTo({
-                        top: isSmallScreen ? ref.current?.offsetTop ?? 0 : ((ref.current?.offsetTop !== undefined) ? ref.current?.offsetTop - 80 : 0),
+                        top: scrollToHeight,
                         behavior: 'smooth',
                       });
                     }}
