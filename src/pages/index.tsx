@@ -1,4 +1,4 @@
-import { RefObject } from 'react';
+import { RefObject, useRef } from 'react';
 import type { NextPage } from 'next';
 import Head from 'next/head';
 
@@ -18,7 +18,56 @@ type SectionData = {
 };
 
 const Home: NextPage = () => {
-  const sections: SectionData[] = [];
+  const sections: SectionData[] = [
+    {
+      title: 'Home',
+      Component: ({ title, reference }) => {
+        return (
+          <section ref={reference} className='bg-red-500 md:pt-20'>
+            <h2 className='text-white text-2xl font-bold'>{title}</h2>
+            <div className='h-[60vh]'></div>
+          </section>
+        );
+      },
+      ref: useRef<HTMLElement>(null),
+    },
+    {
+      title: 'About Me',
+      Component: ({ title, reference }) => {
+        return (
+          <section ref={reference} className='bg-cyan-500'>
+            <h2 className='text-white text-2xl font-bold'>{title}</h2>
+            <div className='h-[60vh]'></div>
+          </section>
+        );
+      },
+      ref: useRef<HTMLElement>(null),
+    },
+    {
+      title: 'Portfolio',
+      Component: ({ title, reference }) => {
+        return (
+          <section ref={reference} className='bg-lime-500'>
+            <h2 className='text-white text-2xl font-bold'>{title}</h2>
+            <div className='h-[60vh]'></div>
+          </section>
+        );
+      },
+      ref: useRef<HTMLElement>(null),
+    },
+    {
+      title: 'Contact Me',
+      Component: ({ title, reference }) => {
+        return (
+          <section ref={reference} className='bg-pink-500'>
+            <h2 className='text-white text-2xl font-bold'>{title}</h2>
+            <div className='h-[60vh]'></div>
+          </section>
+        );
+      },
+      ref: useRef<HTMLElement>(null),
+    },
+  ];
 
   return (
     <>

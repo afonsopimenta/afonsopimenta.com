@@ -14,7 +14,7 @@ const Footer = () => {
               href='https://github.com/afonsopimenta'
               target='_blank'
               rel='noopener noreferrer'
-              className='grid place-items-center text-white w-8 h-8 rounded-full hover:text-custom-gray hover:bg-white transition-all duration-500 ease-out'
+              className='grid place-items-center text-white w-8 h-8 rounded-full hover:text-custom-gray hover:bg-white transition-colors duration-500 ease-out'
             >
               <FontAwesomeIcon icon={faGithub} className='w-5 h-5' />
             </a>
@@ -22,7 +22,7 @@ const Footer = () => {
               href='https://www.linkedin.com/in/afonsopimentasilva/'
               target='_blank'
               rel='noopener noreferrer'
-              className='grid place-items-center text-white w-8 h-8 rounded-full hover:text-custom-gray hover:bg-white transition-all duration-500 ease-out'
+              className='grid place-items-center text-white w-8 h-8 rounded-full hover:text-custom-gray hover:bg-white transition-colors duration-500 ease-out'
             >
               <FontAwesomeIcon icon={faLinkedinIn} className='w-5 h-5' />
             </a>

@@ -1,4 +1,4 @@
-import { RefObject, useState } from 'react';
+import { RefObject, useEffect, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Twirl as Hamburger } from 'hamburger-react';
@@ -16,9 +16,27 @@ type HeaderParams = {
 
 const Header = ({ sections }: HeaderParams) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [windowScroll, setWindowScroll] = useState(0);
+  useEffect(() => {
+    const handleScroll = () => {
+      setWindowScroll(window.scrollY);
+    };
+
+    handleScroll();
+
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
 
   return (
-    <header className='py-4 z-10 bg-custom-gray text-white'>
+    <header
+      className={clsx(
+        'py-4 z-1 text-white md:fixed top-0 right-0 left-0 transition-colors duration-500 ease-out',
+        windowScroll > 0 && 'bg-custom-gray'
+      )}
+    >
       <Container>
         <nav className='flex justify-between items-center'>
           <div className='text-[0] cursor-pointer w-12'>
@@ -45,13 +63,13 @@ const Header = ({ sections }: HeaderParams) => {
               )}
             >
               {sections.map(({ title, ref }) => (
-                <li key={title} className='max-md:m-3 max-md:mr-7 text-right'>
+                <li key={title} className='max-md:mr-8 text-right'>
                   <button
                     className='p-3 hover:text-custom-cyan'
                     onClick={() => {
                       setIsMenuOpen(false);
                       window.scrollTo({
-                        top: ref.current?.offsetTop || 0,
+                        top: ref.current?.offsetTop ?? 0,
                         behavior: 'smooth',
                       });
                     }}
