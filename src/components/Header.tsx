@@ -66,6 +66,7 @@ const Header = ({ sections }: HeaderParams) => {
 
                       const scrollToHeight = (() => {
                         if (ref.current?.offsetTop == undefined) return 0;
+                        if (isSmallScreen) return ref.current?.offsetTop;
                         if (ref.current?.offsetTop - 80 < 0) return 0;
                         return ref.current?.offsetTop - 80;
                       })();
