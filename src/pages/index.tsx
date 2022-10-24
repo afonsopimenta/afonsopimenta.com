@@ -1,7 +1,25 @@
+import { RefObject } from 'react';
 import type { NextPage } from 'next';
 import Head from 'next/head';
 
+import Header from '@/components/Header';
+import Footer from '@/components/Footer';
+
+type SectionData = {
+  title: string;
+  Component: ({
+    title,
+    reference,
+  }: {
+    title: string;
+    reference: RefObject<HTMLElement>;
+  }) => JSX.Element;
+  ref: RefObject<HTMLElement>;
+};
+
 const Home: NextPage = () => {
+  const sections: SectionData[] = [];
+
   return (
     <>
       <Head>
@@ -10,9 +28,22 @@ const Home: NextPage = () => {
         <link rel='icon' href='/favicon.ico' />
       </Head>
 
+      <Header
+        sections={sections.map((section) => ({
+          title: section.title,
+          ref: section.ref,
+        }))}
+      />
       <main>
-        <h1 className='text-3xl font-bold underline'>Hello, World!</h1>
+        {sections.map(({ title, Component }, index) => (
+          <Component
+            key={title}
+            title={title}
+            reference={sections[index].ref}
+          />
+        ))}
       </main>
+      <Footer />
     </>
   );
 };
