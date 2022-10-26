@@ -107,7 +107,7 @@ const Home: NextPage = () => {
             })
           }
           className={clsx(
-            'text-custom-gray bg-white fixed bottom-4 right-4 grid place-items-center w-10 h-10 rounded-full md:hidden hover:bg-neutral-200 hover:translate-y-[-3px] transition-all duration-300 ease-out',
+            'text-custom-gray bg-white fixed bottom-4 right-4 grid place-items-center w-10 h-10 rounded-full md:hidden hover:bg-neutral-200 hover:translate-y-[-5px] transition-all duration-300 ease-out',
             windowScroll < 150 && 'bottom-[-3rem]'
           )}
           aria-label='Back to top'
