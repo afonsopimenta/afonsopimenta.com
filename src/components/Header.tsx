@@ -1,8 +1,8 @@
 import { RefObject, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Twirl as Hamburger } from 'hamburger-react';
 import clsx from 'clsx';
+import { Twirl as Hamburger } from 'hamburger-react';
 
 import Container from '@/components/UI/Container';
 import logo from '@/assets/images/logo.png';
@@ -28,7 +28,7 @@ const Header = ({ sections }: HeaderParams) => {
   return (
     <header
       className={clsx(
-        'py-4 z-1 text-white md:fixed top-0 right-0 left-0 transition-colors duration-500 ease-out',
+        'py-4 text-white md:fixed top-0 right-0 left-0 transition-colors duration-500 ease-out',
         hasScrolled && 'bg-custom-gray'
       )}
     >
@@ -53,14 +53,14 @@ const Header = ({ sections }: HeaderParams) => {
             </div>
             <ul
               className={clsx(
-                'flex text-sm font-bold text-left max-md:flex-col max-md:absolute max-md:right-0 max-md:top-16 max-md:transition-all max-md:duration-500 max-md:overflow-hidden md:gap-7',
+                'flex text-sm font-bold text-left max-md:flex-col max-md:absolute max-md:right-8 max-md:top-20 max-md:transition-all max-md:duration-500 max-md:overflow-hidden md:gap-7',
                 isMenuOpen ? 'max-md:h-44' : 'max-md:h-0'
               )}
             >
               {sections.map(({ title, ref }) => (
-                <li key={title} className='max-md:mr-8 text-right'>
+                <li key={title} className='text-right'>
                   <button
-                    className='p-3 hover:text-custom-cyan'
+                    className='p-3 hover:text-custom-cyan transition-color duration-500 ease-out'
                     onClick={() => {
                       setIsMenuOpen(false);
 

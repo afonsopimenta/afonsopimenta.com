@@ -1,9 +1,13 @@
 import { RefObject, useRef } from 'react';
 import type { NextPage } from 'next';
 import Head from 'next/head';
+import clsx from 'clsx';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faAngleUp } from '@fortawesome/free-solid-svg-icons';
 
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import useWindowScroll from '@/hooks/useWindowScroll';
 
 type SectionData = {
   title: string;
@@ -69,6 +73,8 @@ const Home: NextPage = () => {
     },
   ];
 
+  const windowScroll = useWindowScroll();
+
   return (
     <>
       <Head>
@@ -92,6 +98,23 @@ const Home: NextPage = () => {
           />
         ))}
       </main>
+      {windowScroll !== undefined && (
+        <button
+          onClick={() =>
+            window.scrollTo({
+              top: 0,
+              behavior: 'smooth',
+            })
+          }
+          className={clsx(
+            'text-custom-gray bg-white fixed bottom-4 right-4 grid place-items-center w-10 h-10 rounded-full md:hidden hover:bg-neutral-200 hover:translate-y-[-3px] transition-all duration-300 ease-out',
+            windowScroll < 150 && 'bottom-[-3rem]'
+          )}
+          aria-label='Back to top'
+        >
+          <FontAwesomeIcon icon={faAngleUp} className='w-6 h-6' />
+        </button>
+      )}
       <Footer />
     </>
   );

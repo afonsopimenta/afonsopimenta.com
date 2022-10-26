@@ -5,7 +5,7 @@ import Container from '@/components/UI/Container';
 
 const Footer = () => {
   return (
-    <footer className='py-4 bg-custom-gray border-t-2 border-neutral-500'>
+    <footer className='py-4 bg-custom-gray border-t-2 border-neutral-500 text-center'>
       <Container>
         <div className='flex max-md:flex-col justify-between items-center gap-1'>
           <div>&copy; Copyright 2022 - Afonso Pimenta</div>
