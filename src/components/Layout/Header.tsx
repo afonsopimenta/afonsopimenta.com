@@ -1,22 +1,18 @@
-import { RefObject, useState } from 'react';
+import { useContext, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import clsx from 'clsx';
 import { Twirl as Hamburger } from 'hamburger-react';
 
 import Container from '@/components/UI/Container';
+import SectionsContext from '@/store/sections-context';
 import logo from '@/assets/images/logo.png';
 import useWindowSize from '@/hooks/useWindowSize';
 import useWindowScroll from '@/hooks/useWindowScroll';
 
-type HeaderParams = {
-  sections: {
-    title: string;
-    ref: RefObject<HTMLElement>;
-  }[];
-};
+const Header = () => {
+  const { sections } = useContext(SectionsContext);
 
-const Header = ({ sections }: HeaderParams) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const windowSize = useWindowSize();
   const windowScroll = useWindowScroll();
@@ -24,6 +20,11 @@ const Header = ({ sections }: HeaderParams) => {
   const isSmallScreen =
     windowSize.width !== undefined ? windowSize.width < 768 : false;
   const hasScrolled = windowScroll !== undefined ? windowScroll > 0 : false;
+
+  const sectionsArray = [];
+  for (const key in sections) {
+    sectionsArray.push({title: key, offsetTop: sections[key]})
+  }
 
   return (
     <header
@@ -57,30 +58,23 @@ const Header = ({ sections }: HeaderParams) => {
                 isMenuOpen ? 'max-md:h-44' : 'max-md:h-0'
               )}
             >
-              {sections.map(({ title, ref }) => (
+              {sectionsArray.map(({title, offsetTop}) =>
                 <li key={title} className='text-right'>
-                  <button
-                    className='p-3 hover:text-custom-cyan transition-color duration-500 ease-out'
-                    onClick={() => {
-                      setIsMenuOpen(false);
+                <button
+                  className='p-3 hover:text-custom-cyan transition-color duration-500 ease-out'
+                  onClick={() => {
+                    setIsMenuOpen(false);
 
-                      const scrollToHeight = (() => {
-                        if (ref.current?.offsetTop == undefined) return 0;
-                        if (isSmallScreen) return ref.current?.offsetTop;
-                        if (ref.current?.offsetTop - 80 < 0) return 0;
-                        return ref.current?.offsetTop - 80;
-                      })();
-
-                      window.scrollTo({
-                        top: scrollToHeight,
-                        behavior: 'smooth',
-                      });
-                    }}
-                  >
-                    {title}
-                  </button>
-                </li>
-              ))}
+                    window.scrollTo({
+                      top: isSmallScreen ? offsetTop : offsetTop - 80,
+                      behavior: 'smooth',
+                    });
+                  }}
+                >
+                  {title}
+                </button>
+              </li>
+              )}
             </ul>
           </div>
         </nav>
