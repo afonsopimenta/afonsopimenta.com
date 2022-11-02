@@ -23,7 +23,7 @@ const Header = () => {
 
   const sectionsArray = [];
   for (const key in sections) {
-    sectionsArray.push({title: key, offsetTop: sections[key]})
+    sectionsArray.push({ title: key, offsetTop: sections[key] });
   }
 
   return (
@@ -58,23 +58,23 @@ const Header = () => {
                 isMenuOpen ? 'max-md:h-44' : 'max-md:h-0'
               )}
             >
-              {sectionsArray.map(({title, offsetTop}) =>
+              {sectionsArray.map(({ title, offsetTop }) => (
                 <li key={title} className='text-right'>
-                <button
-                  className='p-3 hover:text-custom-cyan transition-color duration-500 ease-out'
-                  onClick={() => {
-                    setIsMenuOpen(false);
+                  <button
+                    className='p-3 hover:text-custom-cyan transition-color duration-500 ease-out'
+                    onClick={() => {
+                      setIsMenuOpen(false);
 
-                    window.scrollTo({
-                      top: isSmallScreen ? offsetTop : offsetTop - 80,
-                      behavior: 'smooth',
-                    });
-                  }}
-                >
-                  {title}
-                </button>
-              </li>
-              )}
+                      window.scrollTo({
+                        top: isSmallScreen ? offsetTop : offsetTop - 80,
+                        behavior: 'smooth',
+                      });
+                    }}
+                  >
+                    {title}
+                  </button>
+                </li>
+              ))}
             </ul>
           </div>
         </nav>

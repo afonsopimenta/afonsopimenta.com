@@ -1,6 +1,6 @@
-import { useContext, useRef, useEffect } from "react";
+import { useContext, useRef, useEffect } from 'react';
 
-import SectionsContext from "@/store/sections-context";
+import SectionsContext from '@/store/sections-context';
 
 const Hero = () => {
   const { addSection } = useContext(SectionsContext);
@@ -8,7 +8,7 @@ const Hero = () => {
 
   useEffect(() => {
     addSection('Home', heroRef.current?.offsetTop ?? 0);
-  }, [addSection])
+  }, [addSection]);
 
   return (
     <article className='md:pt-20 h-[600px] bg-red-500' ref={heroRef}>

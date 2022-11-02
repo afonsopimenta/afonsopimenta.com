@@ -25,16 +25,13 @@ export const SectionsContextProvider = ({
 }: SectionsContextProviderProps) => {
   const [currentSections, setCurrentSections] = useState<SectionsType>({});
 
-  const addSectionHandler = useCallback(
-    (title: string, offsetTop: number) => {
-      setCurrentSections((latest) => {
-        const sections = { ...latest };
-        sections[title] = offsetTop;
-        return sections;
-      });
-    },
-    []
-  );
+  const addSectionHandler = useCallback((title: string, offsetTop: number) => {
+    setCurrentSections((latest) => {
+      const sections = { ...latest };
+      sections[title] = offsetTop;
+      return sections;
+    });
+  }, []);
 
   const context = {
     sections: currentSections,
