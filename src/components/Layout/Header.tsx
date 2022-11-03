@@ -1,5 +1,5 @@
 import { useContext, useState } from 'react';
-import Link from 'next/link';
+import { useRouter } from 'next/router';
 import Image from 'next/image';
 import clsx from 'clsx';
 import { Twirl as Hamburger } from 'hamburger-react';
@@ -12,6 +12,8 @@ import useWindowScroll from '@/hooks/useWindowScroll';
 
 const Header = () => {
   const { sections } = useContext(SectionsContext);
+
+  const router = useRouter();
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const windowSize = useWindowSize();
@@ -26,6 +28,19 @@ const Header = () => {
     sectionsArray.push({ title: key, offsetTop: sections[key] });
   }
 
+  const forceReload = () => {
+    router.reload();
+  };
+
+  const handleButtonClick = (offsetTop: number) => {
+    setIsMenuOpen(false);
+
+    window.scrollTo({
+      top: isSmallScreen ? offsetTop : offsetTop - 80,
+      behavior: 'smooth',
+    });
+  };
+
   return (
     <header
       className={clsx(
@@ -36,11 +51,9 @@ const Header = () => {
       <Container>
         <nav className='flex justify-between items-center'>
           <div className='text-[0] cursor-pointer w-12'>
-            <Link href='/'>
-              <a>
-                <Image src={logo} alt='Logo' />
-              </a>
-            </Link>
+            <button onClick={forceReload}>
+              <Image src={logo} alt='Logo' />
+            </button>
           </div>
 
           <div>
@@ -54,22 +67,21 @@ const Header = () => {
             </div>
             <ul
               className={clsx(
-                'flex text-sm font-bold text-left max-md:flex-col max-md:absolute max-md:right-8 max-md:top-20 max-md:transition-all max-md:duration-500 max-md:overflow-hidden md:gap-7',
-                isMenuOpen ? 'max-md:h-44' : 'max-md:h-0'
+                'flex text-sm font-bold text-left max-md:flex-col max-md:absolute max-md:left-0 max-md:right-0 max-md:px-8 max-md:pt-2 max-md:top-20 max-md:bg-gradient-to-b max-md:from-custom-gray max-md:to-[#171a1de0] max-md:transition-all max-md:duration-500 max-md:overflow-hidden md:gap-7',
+                isMenuOpen ? 'max-md:h-56' : 'max-md:h-0'
               )}
             >
-              {sectionsArray.map(({ title, offsetTop }) => (
-                <li key={title} className='text-right'>
+              {sectionsArray.map(({ title, offsetTop }, index) => (
+                <li
+                  key={title}
+                  className={clsx(
+                    'text-center max-md:text-right max-md:border-custom-neutral max-md:border-b-[1px]',
+                    index === 0 && 'max-md:border-t-[1px]'
+                  )}
+                >
                   <button
                     className='p-3 hover:text-custom-cyan transition-color duration-500 ease-out'
-                    onClick={() => {
-                      setIsMenuOpen(false);
-
-                      window.scrollTo({
-                        top: isSmallScreen ? offsetTop : offsetTop - 80,
-                        behavior: 'smooth',
-                      });
-                    }}
+                    onClick={() => handleButtonClick(offsetTop)}
                   >
                     {title}
                   </button>
