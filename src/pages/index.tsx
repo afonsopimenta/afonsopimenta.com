@@ -2,10 +2,10 @@ import type { NextPage } from 'next';
 import Head from 'next/head';
 
 import Layout from '@/components/Layout';
-import Hero from '@/components/Hero';
-import AboutMe from '@/components/AboutMe';
-import Portfolio from '@/components/Portfolio';
-import ContactMe from '@/components/ContactMe';
+import Hero from '@/components/Sections/Hero';
+import AboutMe from '@/components/Sections/AboutMe';
+import Portfolio from '@/components/Sections/Portfolio';
+import ContactMe from '@/components/Sections/ContactMe';
 
 const Home: NextPage = () => {
   return (

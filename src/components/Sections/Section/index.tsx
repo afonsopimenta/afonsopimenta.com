@@ -11,12 +11,16 @@ type SectionProps = {
 };
 
 const Section = ({ title, children, className, style }: SectionProps) => {
-  const { addSection } = useContext(SectionsContext);
+  const { updateSection } = useContext(SectionsContext);
   const reference = useRef<HTMLElement>(null);
 
   useEffect(() => {
-    addSection(title, reference.current?.offsetTop ?? 0);
-  }, [addSection, title]);
+    updateSection(title, reference.current?.offsetTop ?? 0);
+
+    window.addEventListener('resize', () => {
+      updateSection(title, reference.current?.offsetTop ?? 0);
+    })
+  }, [updateSection, title]);
 
   return (
     <article className={className} style={style} ref={reference}>

@@ -1,26 +1,22 @@
 import { useContext } from 'react';
-import Typewriter, { TypewriterClass } from 'typewriter-effect';
 
-import Section from '@/components/Section';
+import Section from '@/components/Sections/Section';
 import heroBackground from '@/assets/images/hero-background.jpg';
 import SectionsContext from '@/store/sections-context';
 import useWindowSize from '@/hooks/useWindowSize';
+import ScrollDownButton from './ScrollDownButton';
 
 const Hero = () => {
   const { sections } = useContext(SectionsContext);
-  const contactOffsetTop = sections['Contact Me'];
+  const contactMeOffsetTop = sections['Contact Me'];
 
   const windowSize = useWindowSize();
   const isSmallScreen =
     windowSize.width !== undefined ? windowSize.width < 768 : false;
 
-  const handleTypewriter = (typewriter: TypewriterClass) => {
-    typewriter.typeString('A Fullstack Developer').start();
-  };
-
   const handleButtonClick = () => {
     window.scrollTo({
-      top: isSmallScreen ? contactOffsetTop : contactOffsetTop - 80,
+      top: isSmallScreen ? contactMeOffsetTop : contactMeOffsetTop - 80,
       behavior: 'smooth',
     });
   };
@@ -39,7 +35,7 @@ const Hero = () => {
             Hi, I'm <span className='text-custom-cyan'>Afonso Pimenta</span>
           </h2>
           <div className='text-white text-2xl font-bold font-saira md:text-4xl'>
-            <Typewriter onInit={handleTypewriter} />
+            A Fullstack Developer
           </div>
           <p className='my-5 text-base leading-7 max-w-md'>
             I'm a developer with a strong passion for programming and problem
@@ -53,6 +49,7 @@ const Hero = () => {
           </button>
         </div>
       </div>
+      {!isSmallScreen && <ScrollDownButton />}
     </Section>
   );
 };

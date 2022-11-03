@@ -6,12 +6,12 @@ type SectionsType = {
 
 type SectionsContextType = {
   sections: SectionsType;
-  addSection: (title: string, offsetTop: number) => void;
+  updateSection: (title: string, offsetTop: number) => void;
 };
 
 const SectionsContext = createContext<SectionsContextType>({
   sections: {},
-  addSection: () => {},
+  updateSection: () => {},
 });
 
 export default SectionsContext;
@@ -25,7 +25,7 @@ export const SectionsContextProvider = ({
 }: SectionsContextProviderProps) => {
   const [currentSections, setCurrentSections] = useState<SectionsType>({});
 
-  const addSectionHandler = useCallback((title: string, offsetTop: number) => {
+  const updateSectionHandler = useCallback((title: string, offsetTop: number) => {
     setCurrentSections((latest) => {
       const sections = { ...latest };
       sections[title] = offsetTop;
@@ -35,7 +35,7 @@ export const SectionsContextProvider = ({
 
   const context = {
     sections: currentSections,
-    addSection: addSectionHandler,
+    updateSection: updateSectionHandler,
   };
 
   return (

@@ -9,7 +9,6 @@ module.exports = {
     extend: {
       colors: {
         'custom-gray': '#171a1d',
-        'custom-neutral': '#a3a3a3',
         'custom-cyan': '#50bec2',
       },
       fontFamily: {
@@ -19,6 +18,24 @@ module.exports = {
       },
       boxShadow: {
         glow: '0 0 15px #fff5',
+      },
+      animation: {
+        scroll: 'scroll 1.8s infinite',
+      },
+      keyframes: {
+        scroll: {
+          '0%': {
+            opacity: 0,
+          },
+          '10%': {
+            opacity: 1,
+            transform: 'translateY(0%)',
+          },
+          '100%': {
+            opacity: 0,
+            transform: 'translateY(50%)',
+          },
+        },
       },
     },
   },

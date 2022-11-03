@@ -1,5 +1,5 @@
 import { useContext, useState } from 'react';
-import { useRouter } from 'next/router';
+import Link from 'next/link';
 import Image from 'next/image';
 import clsx from 'clsx';
 import { Twirl as Hamburger } from 'hamburger-react';
@@ -12,8 +12,6 @@ import useWindowScroll from '@/hooks/useWindowScroll';
 
 const Header = () => {
   const { sections } = useContext(SectionsContext);
-
-  const router = useRouter();
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const windowSize = useWindowSize();
@@ -28,13 +26,6 @@ const Header = () => {
     sectionsArray.push({ title: key, offsetTop: sections[key] });
   }
 
-  const forceReload = () => {
-    router.reload();
-    window.scrollTo({
-      top: 0,
-    });
-  };
-
   const handleButtonClick = (offsetTop: number) => {
     setIsMenuOpen(false);
 
@@ -47,16 +38,18 @@ const Header = () => {
   return (
     <header
       className={clsx(
-        'py-4 text-white md:fixed top-0 right-0 left-0 transition-colors duration-500 ease-out',
+        'py-4 text-white md:fixed top-0 right-0 left-0 transition-colors duration-500 ease-out z-10',
         hasScrolled && 'bg-custom-gray'
       )}
     >
       <Container>
         <nav className='flex justify-between items-center'>
           <div className='text-[0] cursor-pointer w-12'>
-            <button onClick={forceReload}>
-              <Image src={logo} alt='Logo' />
-            </button>
+            <Link href='/'>
+              <a>
+                <Image src={logo} alt='Logo' />
+              </a>
+            </Link>
           </div>
 
           <div>
@@ -78,7 +71,7 @@ const Header = () => {
                 <li
                   key={title}
                   className={clsx(
-                    'text-center max-md:text-right max-md:border-custom-neutral max-md:border-b-[1px]',
+                    'text-center max-md:text-right max-md:border-neutral-500 max-md:border-b-[1px]',
                     index === 0 && 'max-md:border-t-[1px]'
                   )}
                 >
