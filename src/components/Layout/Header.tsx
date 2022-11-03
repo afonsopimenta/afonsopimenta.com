@@ -30,6 +30,9 @@ const Header = () => {
 
   const forceReload = () => {
     router.reload();
+    window.scrollTo({
+      top: 0,
+    });
   };
 
   const handleButtonClick = (offsetTop: number) => {
